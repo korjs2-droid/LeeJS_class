@@ -247,7 +247,7 @@ class AppHandler(SimpleHTTPRequestHandler):
             context = _build_context(top_chunks)
             user_with_context = (
                 "Use only the class material context below when answering. "
-                "If context is insufficient, say so clearly.\n\n"
+                "If details are limited, provide the best possible answer and then ask one short follow-up question.\n\n"
                 f"Class material context:\n{context}\n\n"
                 f"Request:\n{user}"
             )
@@ -288,6 +288,11 @@ class AppHandler(SimpleHTTPRequestHandler):
             .get("content", "")
             .strip()
         )
+        if "The context provided is insufficient to answer your request." in text:
+            text = (
+                "현재 자료 범위에서 확인되는 내용으로 먼저 답변드릴게요. "
+                "원하시면 질문 대상을 조금 더 구체화해 주세요."
+            )
         if _max_answer_chars > 0 and len(text) > _max_answer_chars:
             text = text[:_max_answer_chars].rstrip()
         self._send_json(HTTPStatus.OK, {"content": text or "No response."})
