@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>"글로컬과 물류" 무엇이든 물어보세요.</title>
+    <link rel="stylesheet" href="class-ai.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="top">
+        <h1>"글로컬과 물류" 무엇이든 물어보세요.</h1>
+        <p>학생용 페이지: Question + Answer</p>
+      </header>
+
+      <section class="panel">
+        <h2>접속 비밀번호</h2>
+        <input id="userPassword" type="password" placeholder="비밀번호 입력" autocomplete="off" />
+      </section>
+
+      <section class="panel">
+        <h2>이준서 교수에게 물어보기(한국어, 영어, 일본어, 중국어, 베트남어 대응)</h2>
+        <textarea id="question" rows="5" placeholder="질문을 입력하세요."></textarea>
+        <button id="ask" type="button">Ask</button>
+      </section>
+
+      <section class="panel">
+        <h2>Answer</h2>
+        <pre id="answer" class="output">답변이 여기에 표시됩니다.</pre>
+      </section>
+    </main>
+
+    <script src="user.js"></script>
+  </body>
+</html>
