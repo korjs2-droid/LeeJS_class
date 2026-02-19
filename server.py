@@ -35,7 +35,7 @@ CHUNK_OVERLAP = 220
 _max_answer_chars = int(os.environ.get("MAX_ANSWER_CHARS", "0"))
 _default_system_prompt = os.environ.get(
     "DEFAULT_SYSTEM_PROMPT",
-    "Answer primarily based on the provided class materials. If the materials do not contain enough information, provide a concise, helpful answer using reliable external knowledge.",
+    "Answer primarily based on the provided class materials. If the materials do not contain enough information, provide a concise, helpful answer using reliable external knowledge. Never use phrases like \"제공된 자료에는 ... 정보가 포함되어 있지 않습니다.\" or similar template disclaimers.",
 ).strip()
 _user_page_password = os.environ.get("USER_PAGE_PASSWORD", "12345678!").strip()
 
