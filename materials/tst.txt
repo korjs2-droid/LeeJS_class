@@ -1,51 +1,23 @@
 글로컬과물류 수업은 글로벌물류학과에서 설정하고 있는 글로벌의 지역적 범위를 명확히 하고 글로벌의 역사 및 문화를 이해하여 글로벌 학도로서의 정체성을 확립는 것을 목적으로 한다. 글로컬과물류 수업을 통하여 글로컬의 범위를 명확히 기술하고 글로벌 분쟁지역의 원인을 정확히 분석하여 평화적인 해결안을 제시하며 글로컬을 둘러싼 현안에 대하여 자신의 의견을 제시할 수 있고, 글로벌 물류 변화상황의 이해와 사회적 책임감을 바탕으로 의사결정을 내리고 효과적으로 의사소통하고 팀을 이끌 수 있는 역량을 배양한다.
-
 빅데이터분석과시각화 수업은 물류학의 학습에 필요한 과학적인 조사, 분석, 발표 능력향상을 목적으로 통계처리, 설문조사, 문헌요약과 평가, 현장조사 등에 대하여 학습한다. 본 빅데이터분석과시각화 수업을 통하여 글로벌 물류 산업환경에 대해 이해하고 글로벌 물류 운영과 공급망 관리에 필요한 전략을 수립하고 실행할 수 있고, 글로벌의 다양한 문제들에 대해 통계적으로 설문지를 구조화하여 빅데이터 및 시각화를 활용하여 물류지식을 함양하고 3개 이상의 고급 방법론을 통계처리 할 수 있는 역량을 배양한다.
-
- 4차산업혁명(IR 4.0), 데이터경제시대(Data-driven Economy), 21세기의 원유(oil of the 21st century) 등 거창한 화두를 나열하지 않더라도, 소셜커머스, 공유경제, 온라인/모바일 쇼핑, 카네비게이션 등 우리들이 늘상 이용하고 있는 각종 공유경제 서비스 및 SNS 기반 플랫폼만 머릿속에 떠올려 보아도 빅데이터 시대가 성큼 다가왔다는 것을 실감할 수 있을 것이다. 이제 논리성, 합리성이 담보된 데이터 기반의 의사결정은 비즈니스의 세계에서뿐만 아니라, 우리들이 순간순간 맞닥뜨리는 일상에서의 다양한 선택의 기로에서 친숙한 판단 근거로 활용되고 있다. 바로 지금 당장에 먹을 배달음식을 주문할 때에도, 가정의 TV에 연결되어 있는 넷플릭스 영화 한편을 선택할 때에도, 스마트폰으로 곧 떨어질 것 같은 생수를 구입할 때에도, 감상, 소감, 의견 등 소비자들이 남기는 데이터는 우리들의 의사결정에 있어서 결정적인 근거로 작용하고 있는 것이다.
+4차산업혁명(IR 4.0), 데이터경제시대(Data-driven Economy), 21세기의 원유(oil of the 21st century) 등 거창한 화두를 나열하지 않더라도, 소셜커머스, 공유경제, 온라인/모바일 쇼핑, 카네비게이션 등 우리들이 늘상 이용하고 있는 각종 공유경제 서비스 및 SNS 기반 플랫폼만 머릿속에 떠올려 보아도 빅데이터 시대가 성큼 다가왔다는 것을 실감할 수 있을 것이다. 이제 논리성, 합리성이 담보된 데이터 기반의 의사결정은 비즈니스의 세계에서뿐만 아니라, 우리들이 순간순간 맞닥뜨리는 일상에서의 다양한 선택의 기로에서 친숙한 판단 근거로 활용되고 있다. 바로 지금 당장에 먹을 배달음식을 주문할 때에도, 가정의 TV에 연결되어 있는 넷플릭스 영화 한편을 선택할 때에도, 스마트폰으로 곧 떨어질 것 같은 생수를 구입할 때에도, 감상, 소감, 의견 등 소비자들이 남기는 데이터는 우리들의 의사결정에 있어서 결정적인 근거로 작용하고 있는 것이다.
  물질적으로 풍족한 시대를 향유하고 있다. 언제든지 먹고 싶은 것을 골라먹을 수 있고, 손안의 휴대폰만 가지고도 ‘원터치(one touch)’로 전세계의 모든 것을 손에 넣을 수 있다. 과거에 질 좋은 물건만 만들어 시장에 내놓으면 팔리던 공급자 주도의 시대는 이미 지나갔고, 아무리 싸게 좋은 물건을 시장에 내놓더라도 소비자의 선택권이 무궁무진해진 지금, 끊임없는 소비자와의 소통을 통하여 소비자의 니즈와 감성을 순시 파악하여 대응할 수 있는 기업만이 살아남는 빅데이터 시대가 도래한 것이다. 
  SNS의 급부상과 함께 다양한 공간에서 다양한 주제를 둘러싼 소통이 실시간으로 이어지고 있어, 기업 입장에서는 고객의 아이디어와 의견(opinion)을 수집할 수 있는 창구가 무한대로 열려 있다고 할 수 있다. 실제로 SNS를 고객과의 쌍방향 소통 채널로 적극적으로 활용하여 현재 및 잠재 고객과의 관계를 강화하고, 기업 활동을 위한 집단지성(collective intelligence)의 발원지로 삼고 있는 기업도 다수 존재한다. 
  초연결(hyper-connectivity), 초경계(hyper-intelligence), 초융합(hyper-convergence)으로 대표되는 4차 산업혁명과 함께 다(多)문화/이(異)문화/다(多)언어 사회로의 진입이 급속도로 진행되고 있다. 빅데이터의 규모도 테라바이트(terabyte) 혹은 페타바이트(petabyte) 이상의 어마어마한 단위로 급증하고(Volume), 보다 다양한 종류와 형태의 데이터(Variety)가 상상을 초월하는 속도(velocity)로 축적되고 있다. 이상의 3V의 특성을 지닌 빅데이터가 창출할 것으로 예상되던 경제적 부가가치가 소비자 및 생산자 모두에게 유익한 방향으로 현실 세계에서 구체화되고 있다. 빅데이터는 소비자나 생산자 모두에게 필요불가결한 4차 산업혁명 시대에 있어서 또 하나의 ‘문명의 이기(利器)’로 자리잡은 것이다. 
  본서는 국경을 초월하여 기하급수적으로 쌓여나가고 있는 빅데이터 속에서, 광활한 패키지 생태계와 무한한 자유도를 자랑하는 통계분석 툴(tool), R을 활용한 데이터 분석을 통하여, 보다 더 풍부한 부가가치와 지식정보를 찾아내는 방안으로 독자적인 분석기법인 ‘컬처마이닝(culture mining)’을 제안한다. 
  기존의 빅데이터 분석방식이 특정 언어권에 국한된 데이터에 기반한 것이었다고 한다면, 본서의 컬처마이닝은 다언어에 기반해 서로 다른 문화권과의 비교와 대조를 통하여, 차별화된 문화요소(cultural element)를 발견해냄으로써, 이를 활용한 다양한 부가가치(value)와 유용한 지식정보(insight)를 얻어낼 수 있을 것으로 기대한다.  
-
-
-R & 컬처마이닝
-
-  빅데이터, 인공지능(AI), 블록체인 등 각종 데이터 기반의 첨단 기술들이 우리 주변의 실생활에 깊숙히 침투하고 있다. 소셜커머스, 공유경제, 온라인/모바일 쇼핑, 카네비게이션 등 우리들이 늘상 접하고 있는 각종 서비스들이 바로 데이터에 기반한 것이라고 할 수 있는데, 하드웨어 및 컴퓨팅 기술의 획기적인 발전 속도를 고려하면 그 응용 영역의 급속한 확대와 함께, 향후 지식정보사회를 선도해 나갈 부가가치 창출의 원천이라고 할 수 있어 사회적, 산업적 측면에서 이에 대한  활용성이 점차 구체화되고 있다.
+빅데이터, 인공지능(AI), 블록체인 등 각종 데이터 기반의 첨단 기술들이 우리 주변의 실생활에 깊숙히 침투하고 있다. 소셜커머스, 공유경제, 온라인/모바일 쇼핑, 카네비게이션 등 우리들이 늘상 접하고 있는 각종 서비스들이 바로 데이터에 기반한 것이라고 할 수 있는데, 하드웨어 및 컴퓨팅 기술의 획기적인 발전 속도를 고려하면 그 응용 영역의 급속한 확대와 함께, 향후 지식정보사회를 선도해 나갈 부가가치 창출의 원천이라고 할 수 있어 사회적, 산업적 측면에서 이에 대한  활용성이 점차 구체화되고 있다.
  우리나라에서도 개인정보 보호법, 신용정보 보호법, 정보통신망법 등 데이터 3법이 국회를 통과함으로써 4차 산업혁명 시대의 원유라고 할 수 있는 빅데이터를 적극적으로 활용할 수 있는 근거가 마련되어, 데이터 간 융합과 활용을 통한 적극적인 연구와 각종 서비스 개발이 가능해졌다. 
- 
-
-
-<그림1. 대한민국 정부에서 제공하는 공공데이터 서비스 종류> 
-   https://www.data.go.kr
-
  특히 정보통신기술의 눈부신 발달로 물리적인 국경을 초월해 광범위한 빅데이터와 접목된 각종 서비스들이 경제적 부가가치의 창출과 함께 글로벌 비즈니스모델로 전개되고 있다. 아날로그, 오프라인 세계에서 디지털, 온라인 시대로 급변한 작금, 데이터를 제대로 활용하지 못하는 기업들은 국경을 초월한 글로벌 비즈니스 경쟁에서 살아남기 힘들게 되었다. 세계화 글로벌화된 시대에 국경의 의미가 퇴색된지 이미 오래되었고, 기존의 아날로그 중심의 비즈니스는 디지털 플랫폼 기반의 비즈니스에 종속되거나, 심지어 디지털 플랫폼에 의해 운명을 맞이하고 있다.
-
-
-
-
-그림2. 프로슈머란?
-
  앨빈 토플러(Alvin Toffler), 마셜 매클루언(Marshall McLuhan) 등의 세계적인 석학들이 예견했듯이,   3D 프린팅, 1인 미디어 방송, 크라우드 펀딩 등 제조, 마케팅, 금융 등 다양한 분야에서 소비자(consumer)와 공급자(producer)의 경계가 무너졌고, 단순히 생산된 제품을 사용하던 소비자가 제품의 생산과정에도 직접 참입할 수 있는 ‘프로슈머’(prosumer: producer + consumer)가 급증하고 있다. 스마트폰의 급속한 보급과 트위터, 페이스북, 카카오톡, 인스타그램 등 SNS 기반의 다양한 방식의 상호작용적인 커뮤니케이션 채널의 발달로, 기존의 대량생산된 규격화된 제품 수요에서 개인의 개성과 취향을 중시하는 소비자 주도의 맞춤형 소비문화로 급변하고 있는 것이다. 글로벌 비즈니스 활동을 수행하는 기업체의 입장에서도, 기존에 자사가 보유하고 있는 판매 데이터에 의존한 의사결정보다는 국경을 초월하여 생성되는 ‘검색’, ‘후기’ 등 실제 고객이 남기는 데이터를 중시한 의사결정 체계로 전환되고 있다. 결국 데이터 분석을 통한 고객 맞춤형 서비스를 끊임없이 추구하는 기업만이 살아남을 수 있는 빅데이터 시대를 맞이한 것이다. 
-
-
 [컬처마이닝]
  초연결(hyper-connectivity), 초경계(hyper-intelligence), 초융합(hyper-convergence)으로 대표되는 4차 산업혁명과 함께 전 세계는 다(多)문화/이(異)문화/다(多)언어 사회로의 진입이 급속도로 진행되고 있다. 이에 빅데이터의 규모도 테라바이트(terabyte) 혹은 페타바이트(petabyte) 이상의 어마어마한 단위로 급증하고(Volume), 보다 다양한 종류와 형태의 데이터(Variety)가 상상을 초월하는 속도(velocity)로 축적되고 있다. ‘ 21세기의 원유(oil of the 21st century) ’, ‘데이터경제시대(Data-driven Economy)’ 로 표현되는 빅데이터가 창출할 것으로 예상되던 경제적 부가가치가 실제로 현실 세계에서 구현화되고 있는 것이다.
-
-
-
  본서는 초연결, 초경계, 초융합된 다문화/이문화/다언어 사회에서 기하급수적으로 쌓여나가고 있는 빅데이터 속에서 보다 더 풍부한 부가가치(value)와 데이터 분석을 통한 지식정보(insight)를 찾아내는 방안으로 컬처마이닝(Culture-Mining) 기법을 제안한다. 
-
-
 Culture Mining is the process of finding useful or interesting ‘cultural elements’ -life styles, patterns, fashions, trends, models, beliefs, rules, frames etc.- of a specific region or a generation from unstructured text, various image sets by comparing different languages and cultures.
- 컬처 마이닝이란 인간의 문화를 표현하고 있는 다양한 미디어(텍스트, 이미지, 동영상 등)를 분석하여 언어/지역/성별/세대별 문화를 구성하는 문화 요소와 그들간의 관계를 발견해가는 과정이다. 
-출원번호: 40-2020-0207048
+ 컬처 마이닝이란 인간의 문화를 표현하고 있는 다양한 미디어(텍스트, 이미지, 동영상 등)를 분석하여 언어/지역/성별/세대별 문화를 구성하는 문화 요소와 그들간의 관계를 발견해가는 과정이다. (출원번호: 40-2020-0207048)
  원소스, 멀티유즈(One Source Multi Use), 즉 하나의 매체가 여러 유형으로 그대로 활용 가능한 문화콘텐츠 산업만 떠올려 보더라도, 그 파생력과 파급력은 제조업 및 서비스업 등 관련 산업의 성장을 견인해 고부가가치를 창출하는 비즈니스 구조를 만들어내고 있다. 우리나라의 경우도 한류 드라마, K-pop 등 우리의 문화콘텐츠가 글로벌 비지니스 영역을 확장해 나가 그 경제적 가치는 헤아릴 수 없을 정도가 되었다. 한 나라의 역사적, 정신적, 문화적 산물이 다른 나라에서도 더욱 더 빛을 발할 수 있는 글로벌화/세계화된 시대가 본격화된 것이다.
  기존의 빅데이터 분석방식이 특정 언어권에 국한한 데이터에 기반한 것이었다고 한다면, 본서의 컬처마이닝은 다언어에 기반해 서로 다른 문화권과의 비교와 대조를 통하여, 보다 더 차별화된 문화요소(cultural element)를 발견해냄으로써, 이를 활용한 다양한 부가가치(value)와 유용한 지식정보(insight)를 얻어낼 수 있을 것으로 기대할 수 있다. 
-
-
- 본서의 컬처마이닝을 위한 데이터 분석도구는 크게 유료 도구와 무료 도구로 나눌 수 있다. 
+컬처마이닝을 위한 데이터 분석도구는 크게 유료 도구와 무료 도구로 나눌 수 있다. 
  대표적인 유료 분석도구의 하나인 SPSS(Statistical Package for Social Science)는 1969년 사회과학 분야의 데이터를 주된 분석 대상으로 하여 만들어 진 것으로, 2009년 IBM사가 인수하면서  IBM SPSS Statistics로 개명하였다. 현재  IBM SPSS Statistics 27버전이 가장 최신 버전으로 판매되고 있다.
  유료 분석도구로 IBM SPSS Statistics와 쌍벽을 이루고 있는 SAS(Statistical Analysis System)는 1966년 미국의 노스캐롤라이나 주립대학(North Carolina State University, NCSU)에서 고안해낸 프로그램으로, 주로 농업 데이터를 대상으로 분석할 수 있도록 개발되었다. 현재 SAS 9.4 버전이 가장 최신 버전인데, IBM SPSS Statistics보다 더 고가인 제품이지만 포괄적인 통계분석이 가능하여 통계를 전문적으로 다루는 전문가들에게 선호되고 있다.
   SPSS와 SAS가 고가의 비용을 지불해야하는 상업용 제품이기에, 데이터 분석에 바로 적용 가능한 다양한 ‘library’를 유지하고 보수해주는 등의 공식적인 기술 지원을 받을 수 있는 장점이 있지만, 데이터 처리용량의 한계, 그리고 제한적인 시각화(visualization) 등으로 경우에 따라서는 수십만, 수백만의 데이터로 이루어지는 데이터셋을 처리해야 하는 빅데이터 분석용으로는 다소 역부족이라고 할 수 있다.
@@ -53,7 +25,7 @@ Culture Mining is the process of finding useful or interesting ‘cultural eleme
   본서에서는 보다 더 정교하고 다양한 통계적 비즈니스 분석에 적합하고, 방대한 정형 및 비정형 데이터의 추출, 변형 및 정제에 있어서도 사용상의 자유도가 매우 높은 R을 활용하여 컬처마이닝에 활용하고자 한다. 
 
 [R 설치]
- R은 공식 웹사이트(그림5)에 접속하여 세계 각국의 미러사이트를 확인할 수 있는 CRAN(The Comprehensive R Archive Network)에서 무료로 다운로드할 수 있다. CRAN 페이지에는 각국의 미러사이트가 알파벳 순으로 나열되어 있는데, 이중에서 적절한 우리나라의 사이트에 접속하여 자신의 컴퓨터 환경에 맞는 R 설치 프로그램을 다운로드 받으면 안전하게 설치할 수 있다.
+ R은 공식 웹사이트에 접속하여 세계 각국의 미러사이트를 확인할 수 있는 CRAN(The Comprehensive R Archive Network)에서 무료로 다운로드할 수 있다. CRAN 페이지에는 각국의 미러사이트가 알파벳 순으로 나열되어 있는데, 이중에서 적절한 우리나라의 사이트에 접속하여 자신의 컴퓨터 환경에 맞는 R 설치 프로그램을 다운로드 받으면 안전하게 설치할 수 있다.
 
 
 
@@ -266,13 +238,9 @@ Culture Mining is the process of finding useful or interesting ‘cultural eleme
 다문화 다인종 다언어의 용광로(melting pot)라고  할 수 있는 미국의 선거 캠페인에 있어서 본서의 컬처마이닝이 시사하는 바가 매우 크다.
 
 Culture Mining is the process of finding useful or interesting ‘cultural elements’ -life styles, patterns, fashions, trends, models, beliefs, rules, frames etc.- of a specific region or a generation from unstructured text, various image sets by comparing different languages and cultures.
- 컬처 마이닝이란 인간의 문화를 표현하고 있는 다양한 미디어(텍스트, 이미지, 동영상 등)를 분석하여 언어/지역/성별/세대별 문화를 구성하는 문화 요소와 그들간의 관계를 발견해가는 과정이다. 
-출원번호: 40-2020-0207048
+ 컬처 마이닝이란 인간의 문화를 표현하고 있는 다양한 미디어(텍스트, 이미지, 동영상 등)를 분석하여 언어/지역/성별/세대별 문화를 구성하는 문화 요소와 그들간의 관계를 발견해가는 과정이다.(출원번호: 40-2020-0207048)
 
  빅데이터에 기반한 과거 오바마 선거 캠패인은 다문화/다언어/다인종으로 구성된 미국 사회에서 근본적으로 컬처마이닝이 작동한 사례라고 볼 수 있는 것이다. 
-
-
-
 
 
  미국 최초의 흑인 대통령의 오바마 캠프는 전통적으로 민주당을 지지하는 흑인에 대해서는 별도의 선거운동이 필요하지 않다고 판단내렸고, 이외에도 스페인어를 사용하면서 미국에 거주하며 미국 시민권 획득과 경제적 혜택을 바라는 라틴 아메리카계의 히스패닉 그리고 노동조합에 소속된 근로자 및 극단적인 페미니스트 등을 제외한 부동층을 공략하는데 모든 선거자금과 인력을 집중시킬 수 있었던 ‘선택과 집중’이 가능했던 것도 빅데이터의 힘이었던 것이다.
@@ -302,18 +270,7 @@ CRAN(the Comprehensive R Archive Network) 패키지 저장소(package repository
 
 
 패키지 설치가 완료되면 library 함수를 통해 해당 패키지를 불러와서 메모리에 적재하여 사용한다. 패키지가 메모리에 적재되면 패키지 안의 다양한 함수를 사용할 수 있게 된다. 패키지의 정보는 ‘??패키지명’의 명령어로, 그리고 패키지의 각 함수의 기능 및 사용법은 ‘?함수명’의 명령어로 해당 세부 정보를 찾아볼 수 있어, 프로그램내에서 바로 프로그램 문법의 수정 및 편집이 한번에 가능하다.
-
-
-
-
 감성마켓팅과 컬처마이닝
-
-
- 
-
-
-
-
  어떤 일본인 바이올린 장인이 일본의 편백나무(桧_‘히노키’)에 착안하여 편백나무 바이올린을 만들었다. 일본에서 가장 오래된 정사를 기록하고 있는 일본서기(日本書紀_AD 720년)에도 등장하는 히노키는 신전 건축에 사용되어왔던 나무로 그 발음과 의미(「日の木_hinoki」 혹은 「霊の木_nihoki」)에서도 일본 고유의 역사와 문화적인 의미를 지닌 나무라고 할 수 있다.  
 
 スギ・クスノキは舟に、ヒノキは宮殿に、マキは棺に使いなさい
@@ -322,8 +279,6 @@ CRAN(the Comprehensive R Archive Network) 패키지 저장소(package repository
 
 일본의 풍토에서 자라나 1,000년 이상의 생명력을 자랑하는 편백나무 특유의 향과 어우러진 바이올린의 음색에서 일본 특유의 맛과 소리가 물씬 풍길 것 같다는 생각이 들게 만든다.  이외에도 일본에는 삼나무로 만든 상자로 포장한 양갱, 오동나무로 만든 서랍장, 편백나무 욕조 등 일본 고유의 감성과 정취를 살려 제품으로 상품화한 매력적인 물건들을 쉽게 찾아볼 수 있다.  
  일반적으로 감성이라 하면  5감 즉 시각, 청각, 촉각, 미각, 후각 등 신체적인 감각 기관을 매개로 하여  외부의 자극을 받아들이는 ‘감수성의 능력’을 말한다. 다소 철학적인 의미가 강하지만, 관찰하는 대상물에 대하여 감상자가 받는 아름다운 느낌, 편안함, 불쾌감, 불만족감 등  5감을 바탕으로 받게 되는 자극에 근거한 종합적인 판단이라고 할 수 있다.
-
-
 
  물질적으로 풍족한 시대를 향유하고 있다. 언제든지 먹고 싶은 것을 골라먹을 수 있고, 손안의 휴대폰만 가지고도 ‘원터치(one touch)’로 모든 것을 손에 넣을 수 있다. 과거에 질 좋은 물건만 만들어 시장에 내놓으면 팔리던 공급자 주도의 시대는 이미 지나갔고, 아무리 싸게 좋은 물건을 시장에 내놓더라도 소비자의 선택권이 무궁무진해진 지금, 끊임없는 소비자와의 소통을 통하여 소비자의 니즈와 감성을 순시 파악하여 대응하는 기업만이 살아남는 시대가 된 것이다. 소비자 주도의 엄중해진 비즈니스 환경의 변화 속에서, 기업은 다양해진 소비자의 니즈와 고객 한명 한명의 변화무쌍한 ‘감성 수요’에 대응하는 것이 매우 중요하게 되었다.     
  컬처마이닝은 기능, 성능, 신뢰도 등 기본적으로 어떤 재화나 서비스의 상품 가격에 반영되는 경제적인 상품가치와는 별도로, 소비자의 감성을 자극하여 감동과 공감을 얻어냄으로써 상품가치를 더욱 더 극대화시키는 ‘감성가치’라고 하는 부가가치를 창출할 수 있다. 
@@ -446,13 +401,7 @@ CRAN(the Comprehensive R Archive Network) 패키지 저장소(package repository
 
 
 감성어휘사전과 컬처마이닝 도메인 감성어휘사전 구축
-
-
  텍스트에 내재되어 있는 감성적 상태나 주관적 평가를 식별하고 추출하여 계량화하는 감성분석을 수행하기 위해서 반드시 필요한 것이 감성어휘사전(sentiment lexicon dictionary)이다. 
-
-
-
-
 
 
  기본적으로 감성분석은 감성어휘사전에 포함된 평가어에 부여된 감성점수(sentiment score)의 합산, 혹은 평균으로 전체 텍스트의 감성상태를 평가하거나 범주화하는 것이다. 
@@ -3720,7 +3669,6 @@ Liberal Arts, Social Studies & Technology
 근대 동아시아의 중요한 특징이 제국주의에 대응하는 민족주의의 대두라는 점에는 이견이 없다. 다만 ‘제국주의’가 주로 서구 열강의 식민주의로만 간주되고, ‘민족주의’ 역시 중국을 중심으로 한 동아시아 전체의 서구 저항으로 이해되어 온 전통적 해석에는 보완이 필요하다. 왜냐하면 중국 역시 주변 국가와 민족을 대상으로 서구와 크게 다르지 않은 식민주의적 정책을 시행했기 때문이다. 그렇다면 주변 국가와 민족이 중국의 팽창정책에 반발하고 저항했던 현상은 어떻게 해석해야 하는가?
 이 문제를 고려하면, 동아시아 민족주의는 단순히 열강 제국주의에 대한 저항만이 아니라, 중국의 주변 지역에 대한 식민화 정책에 맞선 저항이라는 측면도 함께 가지고 있었다는 결론을 도출할 수 있다. 다시 말해 근대 동아시아 민족주의는 서구 제국주의뿐 아니라, 중국의 제국적 팽창에 대한 주변국의 대응과 저항을 포함하는 복합적인 역사적 현상이었던 셈이다. (이승우, 2005)
 조공과 책봉(Tribute and Installation)
-
 중국뿐 아니라 고대 이집트인, 히브리인, 페르시아인, 그리스인들도 모두 자신을 ‘세계의 중심’이라고 인식했다. 이들은 주변의 다른 민족을 미개하고 야만적인 집단으로 여기며 자신들과 구별지었다. 중국 역시 이러한 세계관을 갖고 있었다. 중국은 자신들 주변의 이민족을 통틀어 ‘사이(四夷)’라고 부르고, 점차 방향에 따라 동이(東夷), 서융(西戎), 남만(南蠻), 북적(北狄)으로 분류했다. 이 명칭에는 이미 차별적 의미가 내포되어 있는데, 예를 들어 ‘만(蠻)’에는 벌레(虫), ‘적(狄)’에는 개(犭)와 같은 부정적 의미의 글자가 포함되어 있다. 반면 중국 스스로는 문명국인 ‘화(華)’로 자리매김하며 주변 민족을 ‘오랑캐(夷)’로 낮춰 부르는 사상, 즉 화이사상(華夷思想)을 형성하였다.
 중국은 이러한 관점 때문에 주변 민족과의 관계를 수평적·대등한 관계로 보지 않았다. 고구려를 비롯해 다른 주변국들이 여러 독립된 세계들이 병존한다고 보았던 것과 달리, 중국은 오직 자신만을 중심에 두고 다른 나라들은 그 아래에 존재해야 한다고 인식했다. 이러한 중국 중심의 질서 속에서 주변국들은 현실적으로 중국과 대등한 관계를 주장하기 어려웠고, 살아남기 위해 일정한 종속적 질서에 참여할 수밖에 없었다.
 이 관계는 흔히 사대(事大)와 자소(字小)라는 원칙으로 표현된다. 작은 나라(小)는 큰 나라(大)를 섬기고, 큰 나라는 작은 나라를 보호한다는 상호관계이다. 작은 나라는 큰 나라의 군사적 위협으로부터 스스로를 지킬 수 있고, 큰 나라는 작은 나라의 이탈을 걱정하지 않아도 되는 일종의 상호 안정장치였다.
@@ -4243,8 +4191,7 @@ The overall index is calculated by analysing the six main sub-dimensions listed 
 Several countries have announced specific targets of LPI score or LPI rank in their strategic development plans. To increase their attractiveness, countries are embarking on major projects in a number of areas to improve their LPI position. However, the proximity of a country’s score to others at any given performance level might be more telling than the exact ranking.
 Countries at similar performance levels may have substantially different ranks, especially in the middle and lower country income ranges. Particularly, ranking and relative changes in ranks from one LPI edition to another need to be treated with caution. The latest LPI report also provides a country listing with the weighted average of LPI scores and ranks across all four editions in 2007-2014. This listing smooths out the inevitable variation from one year to another in survey-based data, and it thus provides a more balanced overall picture.
 To account for potential sampling error and the LPI’s limited domain of validity, LPI scores are calculated with approximate 80 per cent confidence intervals over the standard error of LPI scores across all respondents (Arvis,et al.2014). These confidence intervals must be examined carefully to determine whether a change in score or a difference between two scores is statistically significant. Countries with small number of respondents, such as Sweden, Norway, Bahrain, New Zealand, and Ethiopia have larger intervals between upper and lower bounds for scores and ranks, since their estimates are less certain. The average confidence interval translates into an average of 20 rank places, using upper and lower rank bounds.
-Understanding the trends in the logistics performance requires looking behind the LPI scores and rankings to see the interactions between the logistics performance and policy actions, competitive forces, economic and political environment. Over the case study we present here, we propose implementation of a holistic point of view, which constitutes an analysis of coherent and interlocking sets of processes for identifying the hidden bottlenecks that have a critical impact on sector competitiveness, and taking necessary actions to support the industry in bottleneck areas require a comprehensive analysis of policy impacts on all dimensions.
-L Ojala, D Celebi(2015)
+Understanding the trends in the logistics performance requires looking behind the LPI scores and rankings to see the interactions between the logistics performance and policy actions, competitive forces, economic and political environment. Over the case study we present here, we propose implementation of a holistic point of view, which constitutes an analysis of coherent and interlocking sets of processes for identifying the hidden bottlenecks that have a critical impact on sector competitiveness, and taking necessary actions to support the industry in bottleneck areas require a comprehensive analysis of policy impacts on all dimensions.(L Ojala, D Celebi(2015))
 
 
 Domestic LPI
@@ -4253,16 +4200,6 @@ The Domestic LPI looks in detail at the logistics environments in 100 countries.
      • Services,
      • Border procedures and time, and
      • Supply chain reliability.
-
-
-
- #
-
-
-글로컬과 물류
- #
-
- #
 
 
 The role of the LPI in promoting trade
@@ -4276,10 +4213,7 @@ Allowing for comparisons across 160 countries, the LPI is used by companies to i
 Airbnb is used as a research context, because it is not only a dominant platform but also the most well-known sharing economy platform that is leading the home-sharing market (Mair & Reischauer, 2017; Pappas, 2017). Since its founding in 2008, Airbnb has expanded rapidly and now offers more than 6 million accommodation options in more than 100, 000 cities and 191 countries. As of July 2020, it had hosted more than 750 million guests (Airbnb, 2020). Nowadays, Airbnb has undoubtedly become the hotel industry’s largest competitor (Mody et al., 2019). Instead of booking hotels from conventional websites, consumers may choose to stay in spare rooms listed on sharing platforms. More specifically, consumers may switch from third-party online travel agent (OTA) platforms that distribute hotel rooms, such as Hotels.com, Booking.com, or Expedia, to digital sharing platforms such as Airbnb (Tussyadiah, 2016). 
 The sharing economy emerged after a series of technological advancements that increased social connectivity and empowered individuals. The sharing economy has changed conumpion practices and the perception of ownership. Sharing platforms also threaten the eco- nomic sustainability of the hotel industry. 
 
-
-
 글로벌 OTA(Online Travel Agency)의 성패
-
 The sharing economy has emerged as an alternative to goods and services offered by existing industries (Xu, 2020). The main reason underlying the success of the sharing economy is the benefits it provides to both service or product providers and consumers (Pappas, 2017). Providers can easily start a business at a relatively low start-up cost and generate income from excess capacity of goods; furthermore, consumers have more available supply options than those offered by existing industries. Although the sharing economy raises some political and social concerns, including unavailability of standardized levels of service and price, absence of safeguards for consumer tax evasion, and regulatory compliance, the advent of the sharing economy has altered the existing market and induced changes in customers’ consumption patterns (Leung et al., 2019; Lindblom et al., 2018; Mao & Lyu, 2017; Thaichon et al., 2020). The development of peer-to-peer platforms has reduced the profitability of existing business operation in multiple sectors (Akbar & Tracogna, 2018). For example, Zervas et al. (2015) argued that for every 10 % increase in Airbnb listings, the revenue of traditional hotels decreased by 0.37 %. Although the emergence of the new sharing model is remarkable, it is a serious threat to traditional business models.
 The COVID-19 pandemic has devastated the global economy and strongly affected the tourism and hospitality sectors (Lee & Deale, 2021). The number of international tourists decreased from approximately 1.5 billion in 2019 to approximately 380 million in 2020, which represents a 74 % decrease, and international tourism spending decreased by apprxoimately US$1.3 billion during this period (UNWTO, 2021). The pandemic caused travel and mobility bans and community lockdowns, which had unprecedented adverse effects on the tourism and hospitality sectors (Li et al., 2021). The tourism and hospitality sectors have adjusted their practices to help customers make informed decisions and decrease the risk of disease transmission (Leung & Cai, 2021). Because repeat visits by guests are the key to survival for organizations in the aforementioned sectors, managers have investigated how to retain guests and motivate purchase behavior (Yu et al., 2021). 
 The sharing economy market has proven to be a challenge to existing service providers, OTA(Online Travel Agency) . According to Henten and Windekilde (2016), the sharing economy has replaced traditional business operations. Because consumers have shifted toward the sharing and experience-driven economy, commercial sharing platforms have ramified traditional markets (Camilleri & Neuhofer, 2017). To survive in the new arena of the sharing economy, traditional businesses must identify the factors that encourage and discourage consumers from switching to sharing economy platforms from existing businesses. 
@@ -5246,8 +5180,4 @@ t-SNE
 하이브리드 국제교류
 Hybrid International Exchange
 온라인·오프라인을 결합해 운영하는 새로운 형태의 국제학생교류 프로그램.
-
-
-
-
 
