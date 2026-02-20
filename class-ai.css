@@ -169,10 +169,10 @@ button:hover {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(rgba(168, 187, 205, 0.46), rgba(168, 187, 205, 0.46)),
+    linear-gradient(rgba(168, 187, 205, 0.24), rgba(168, 187, 205, 0.24)),
     url("back.png") center/80% no-repeat;
-  filter: blur(2px);
-  transform: scale(1.02);
+  filter: blur(0.5px);
+  transform: scale(1.005);
   z-index: 0;
 }
 
