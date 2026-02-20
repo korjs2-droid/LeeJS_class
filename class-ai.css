@@ -170,7 +170,7 @@ button:hover {
   inset: 0;
   background:
     linear-gradient(rgba(168, 187, 205, 0.72), rgba(168, 187, 205, 0.72)),
-    url("back.png") center/cover no-repeat;
+    url("back.png") center/80% no-repeat;
   filter: blur(4px);
   transform: scale(1.04);
   z-index: 0;
