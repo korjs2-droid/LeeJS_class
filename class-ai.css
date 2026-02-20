@@ -145,7 +145,7 @@ button:hover {
   font-weight: 700;
 }
 
-@media (max-width: 18px) {
+@media (max-width: 760px) {
   .app {
     margin: 12px auto;
   }
@@ -174,7 +174,7 @@ button:hover {
 
 .chat-header h1 {
   margin: 0;
-  font-size: clamp(20px, 2.7vw, 42px);
+  font-size: clamp(18px, 2.1vw, 34px);
   line-height: 1.2;
   font-weight: 700;
 }
@@ -298,7 +298,8 @@ button:hover {
   }
 
   .chat-header h1 {
-    font-size: 32px;
+    font-size: 18px;
+    line-height: 1.35;
   }
 
   .chat-messages {
