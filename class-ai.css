@@ -145,7 +145,7 @@ button:hover {
   font-weight: 700;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 18px) {
   .app {
     margin: 12px auto;
   }
