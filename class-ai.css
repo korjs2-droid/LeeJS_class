@@ -188,6 +188,9 @@ button:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 3;
 }
 
 .chat-header h1 {
@@ -209,6 +212,7 @@ button:hover {
   display: grid;
   gap: 18px;
   align-content: start;
+  min-height: 0;
 }
 
 .msg-row {
@@ -306,7 +310,7 @@ button:hover {
 @media (max-width: 760px) {
   .chat-shell {
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     margin: 0;
     border-radius: 0;
   }
