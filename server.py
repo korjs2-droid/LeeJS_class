@@ -35,7 +35,7 @@ CHUNK_OVERLAP = 220
 _max_answer_chars = int(os.environ.get("MAX_ANSWER_CHARS", "0"))
 _default_system_prompt = os.environ.get(
     "DEFAULT_SYSTEM_PROMPT",
-    "Answer primarily based on the provided class materials. If the materials do not contain enough information, provide a concise, helpful answer using reliable external knowledge. Never use phrases like \"제공된 자료에는 ... 정보가 포함되어 있지 않습니다.\" or similar template disclaimers.",
+    "Answer primarily based on the provided class materials. If the materials are incomplete, continue with a concise, useful answer using reliable external knowledge. Do not use template disclaimers like 'the provided materials do not include information about ...'.",
 ).strip()
 _user_page_password = os.environ.get("USER_PAGE_PASSWORD", "12345678!").strip()
 
@@ -58,6 +58,36 @@ def _rate_limit_ok(ip: str) -> bool:
 
 def _tokenize(text: str) -> list[str]:
     return [t for t in re.split(r"[^\w]+", text.lower()) if t]
+
+def _is_unclear_user_query(text: str) -> bool:
+    s = text.strip()
+    if len(s) < 2:
+        return True
+    lowered = s.lower()
+    vague = {
+        "?",
+        "??",
+        "뭐",
+        "뭔데",
+        "뭐야",
+        "왜",
+        "어떻게",
+        "help",
+    }
+    return lowered in vague
+
+def _is_unclear_response(text: str) -> bool:
+    lowered = text.lower()
+    markers = [
+        "질문을 더 구체",
+        "질문을 명확",
+        "다시 설명",
+        "clarify",
+        "more details",
+        "not clear",
+        "could you specify",
+    ]
+    return any(m in lowered for m in markers)
 
 
 def _chunk_text(text: str) -> list[str]:
@@ -231,6 +261,9 @@ class AppHandler(SimpleHTTPRequestHandler):
         if not user:
             self._send_json(HTTPStatus.BAD_REQUEST, {"error": "Missing 'user'"})
             return
+        if _is_unclear_user_query(user):
+            self._send_json(HTTPStatus.OK, {"content": "제가 잘 못 알아들었습니다. 다시 질문해 주세요."})
+            return
 
         if model not in OPENAI_MODEL_ALLOWLIST:
             self._send_json(HTTPStatus.BAD_REQUEST, {"error": "Model not allowed"})
@@ -293,6 +326,13 @@ class AppHandler(SimpleHTTPRequestHandler):
                 "현재 자료 범위에서 확인되는 내용으로 먼저 답변드릴게요. "
                 "원하시면 질문 대상을 조금 더 구체화해 주세요."
             )
+        if "제공된 자료에는" in text and "정보가 포함되어 있지 않습니다" in text:
+            text = text.replace(
+                "제공된 자료에는",
+                "현재 자료 기준으로 직접 확인된 내용은 제한적이지만",
+            ).replace("정보가 포함되어 있지 않습니다.", "")
+        if _is_unclear_response(text):
+            text = "제가 잘 못 알아들었습니다. 다시 질문해 주세요."
         if _max_answer_chars > 0 and len(text) > _max_answer_chars:
             text = text[:_max_answer_chars].rstrip()
         self._send_json(HTTPStatus.OK, {"content": text or "No response."})
