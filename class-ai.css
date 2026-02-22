@@ -182,7 +182,9 @@ button:hover {
 }
 
 .chat-header {
-  background: #5e629a;
+  background:
+    linear-gradient(rgba(40, 46, 98, 0.62), rgba(40, 46, 98, 0.62)),
+    url("lee.JPG") center/cover no-repeat;
   color: #fff;
   padding: 18px 22px;
   display: flex;
