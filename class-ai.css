@@ -259,6 +259,15 @@ button:hover {
   box-shadow: 0 3px 10px rgba(26, 39, 62, 0.13);
 }
 
+.chat-image {
+  margin-top: 8px;
+  max-width: min(280px, 70vw);
+  max-height: 220px;
+  border-radius: 10px;
+  border: 1px solid rgba(46, 64, 92, 0.25);
+  object-fit: cover;
+}
+
 .bot-bubble {
   background: #f0f1f3;
   color: #30353d;
@@ -283,7 +292,7 @@ button:hover {
   border-top: 1px solid #c0c7d3;
   padding: 12px 14px calc(12px + env(safe-area-inset-bottom));
   display: grid;
-  grid-template-columns: 220px 1fr 76px;
+  grid-template-columns: 220px 52px 1fr 76px;
   gap: 10px;
   align-items: center;
 }
@@ -295,6 +304,18 @@ button:hover {
   padding: 15px 20px;
   background: #fff;
   font-size: clamp(16px, 1.6vw, 26px);
+}
+
+.attach-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 0;
+  background: #7b82be;
+  color: #fff;
+  font-size: 22px;
+  display: grid;
+  place-items: center;
 }
 
 .send-btn {
@@ -354,7 +375,7 @@ button:hover {
   }
 
   .chat-input-wrap {
-    grid-template-columns: 90px 1fr 54px;
+    grid-template-columns: 68px 40px 1fr 44px;
     gap: 8px;
     padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
   }
@@ -370,5 +391,11 @@ button:hover {
     width: 52px;
     height: 52px;
     font-size: 20px;
+  }
+
+  .attach-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
   }
 }
