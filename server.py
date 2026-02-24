@@ -23,7 +23,7 @@ OPENAI_MODEL_DEFAULT = "gpt-4o-mini"
 OPENAI_MODEL_ALLOWLIST = {"gpt-4o-mini", "gpt-4o"}
 RATE_WINDOW_SECONDS = 60
 RATE_MAX_REQUESTS = 20
-MAX_CHAT_BODY_BYTES = 300_000
+MAX_CHAT_BODY_BYTES = 8_000_000
 MAX_ADMIN_BODY_BYTES = 30_000_000
 MAX_ADMIN_UPLOAD_BYTES = 40_000_000
 DEFAULT_PORT = 8000
@@ -251,6 +251,7 @@ class AppHandler(SimpleHTTPRequestHandler):
 
         system = str(payload.get("system", "")).strip() or _default_system_prompt
         user = str(payload.get("user", "")).strip()
+        image_data_url = str(payload.get("imageDataUrl", "")).strip()
         model = str(payload.get("model", OPENAI_MODEL_DEFAULT)).strip() or OPENAI_MODEL_DEFAULT
         kb = payload.get("kb", {})
         kb_enabled = bool(kb.get("enabled")) if isinstance(kb, dict) else False
@@ -285,12 +286,25 @@ class AppHandler(SimpleHTTPRequestHandler):
                 f"Request:\n{user}"
             )
 
+        user_content = user_with_context
+        if image_data_url:
+            if not image_data_url.startswith("data:image/"):
+                self._send_json(HTTPStatus.BAD_REQUEST, {"error": "Invalid imageDataUrl format"})
+                return
+            if len(image_data_url) > 6_000_000:
+                self._send_json(HTTPStatus.BAD_REQUEST, {"error": "Image is too large"})
+                return
+            user_content = [
+                {"type": "text", "text": user_with_context},
+                {"type": "image_url", "image_url": {"url": image_data_url}},
+            ]
+
         upstream_payload = {
             "model": model,
             "temperature": 0.2,
             "messages": [
                 {"role": "system", "content": system},
-                {"role": "user", "content": user_with_context},
+                {"role": "user", "content": user_content},
             ],
         }
 
