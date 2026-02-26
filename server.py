@@ -89,6 +89,22 @@ def _is_unclear_response(text: str) -> bool:
     ]
     return any(m in lowered for m in markers)
 
+def _remove_material_disclaimer(text: str) -> str:
+    # Remove common template disclaimers like:
+    # "제공된 자료에는 ... 정보가 포함되어 있지 않습니다."
+    patterns = [
+        r"제공된\s*자료[에는엔].{0,160}?포함되어\s*있지\s*않습니다\.?",
+        r"자료[에는엔].{0,160}?없습니다\.?",
+        r"제공된\s*자료[에는엔].{0,160}?확인할\s*수\s*없습니다\.?",
+    ]
+    cleaned = text
+    for p in patterns:
+        cleaned = re.sub(p, "", cleaned, flags=re.IGNORECASE | re.DOTALL)
+    cleaned = re.sub(r"\n{3,}", "\n\n", cleaned).strip()
+    if not cleaned:
+        return "현재 자료와 일반 지식을 바탕으로 핵심만 간단히 답변드릴게요."
+    return cleaned
+
 def _sanitize_history(history) -> list[dict]:
     if not isinstance(history, list):
         return []
@@ -361,11 +377,7 @@ class AppHandler(SimpleHTTPRequestHandler):
                 "현재 자료 범위에서 확인되는 내용으로 먼저 답변드릴게요. "
                 "원하시면 질문 대상을 조금 더 구체화해 주세요."
             )
-        if "제공된 자료에는" in text and "정보가 포함되어 있지 않습니다" in text:
-            text = text.replace(
-                "제공된 자료에는",
-                "현재 자료 기준으로 직접 확인된 내용은 제한적이지만",
-            ).replace("정보가 포함되어 있지 않습니다.", "")
+        text = _remove_material_disclaimer(text)
         if _is_unclear_response(text):
             text = "제가 잘 못 알아들었습니다. 다시 질문해 주세요."
         if _max_answer_chars > 0 and len(text) > _max_answer_chars:
