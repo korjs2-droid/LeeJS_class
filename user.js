@@ -6,6 +6,8 @@ const askBtn = document.getElementById("ask");
 const messagesEl = document.getElementById("messages");
 let selectedImageDataUrl = "";
 let selectedImageName = "";
+const conversationHistory = [];
+const MAX_HISTORY_MESSAGES = 20;
 
 askBtn.addEventListener("click", sendQuestion);
 attachImageBtn.addEventListener("click", () => imageFileInput.click());
@@ -65,6 +67,7 @@ async function sendQuestion() {
         user: question,
         kb: { enabled: true, query: question, topK: 6 },
         imageDataUrl: imageDataUrlToSend || undefined,
+        history: conversationHistory,
       }),
     });
 
@@ -74,6 +77,8 @@ async function sendQuestion() {
     }
 
     const json = await res.json();
+    pushHistory("user", question);
+    pushHistory("assistant", json.content || "No response.");
     removeTyping(typingNode);
     appendBotMessage(json.content || "No response.");
   } catch (error) {
@@ -112,7 +117,7 @@ function appendBotMessage(text) {
 function appendTyping() {
   const row = document.createElement("div");
   row.className = "typing-row";
-  row.textContent = "이준서 교수 고민중...";
+  row.textContent = "답변 생성 중...";
   messagesEl.appendChild(row);
   scrollToBottom();
   return row;
@@ -126,6 +131,13 @@ function removeTyping(node) {
 
 function scrollToBottom() {
   messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+function pushHistory(role, content) {
+  conversationHistory.push({ role, content });
+  if (conversationHistory.length > MAX_HISTORY_MESSAGES) {
+    conversationHistory.splice(0, conversationHistory.length - MAX_HISTORY_MESSAGES);
+  }
 }
 
 async function fileToDataUrl(file) {
