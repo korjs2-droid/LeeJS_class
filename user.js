@@ -8,6 +8,7 @@ let selectedImageDataUrl = "";
 let selectedImageName = "";
 const conversationHistory = [];
 const MAX_HISTORY_MESSAGES = 20;
+let isComposing = false;
 
 askBtn.addEventListener("click", sendQuestion);
 attachImageBtn.addEventListener("click", () => imageFileInput.click());
@@ -27,8 +28,15 @@ imageFileInput.addEventListener("change", async () => {
   }
 });
 
+questionInput.addEventListener("compositionstart", () => {
+  isComposing = true;
+});
+questionInput.addEventListener("compositionend", () => {
+  isComposing = false;
+});
+
 questionInput.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
+  if (event.key === "Enter" && !isComposing && !event.isComposing && event.keyCode !== 229) {
     event.preventDefault();
     sendQuestion();
   }
