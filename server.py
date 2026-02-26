@@ -89,6 +89,24 @@ def _is_unclear_response(text: str) -> bool:
     ]
     return any(m in lowered for m in markers)
 
+def _sanitize_history(history) -> list[dict]:
+    if not isinstance(history, list):
+        return []
+    cleaned = []
+    for item in history[-20:]:
+        if not isinstance(item, dict):
+            continue
+        role = str(item.get("role", "")).strip().lower()
+        content = str(item.get("content", "")).strip()
+        if role not in {"user", "assistant"}:
+            continue
+        if not content:
+            continue
+        if len(content) > 3000:
+            content = content[:3000]
+        cleaned.append({"role": role, "content": content})
+    return cleaned
+
 
 def _chunk_text(text: str) -> list[str]:
     chunks = []
@@ -252,6 +270,7 @@ class AppHandler(SimpleHTTPRequestHandler):
         system = str(payload.get("system", "")).strip() or _default_system_prompt
         user = str(payload.get("user", "")).strip()
         image_data_url = str(payload.get("imageDataUrl", "")).strip()
+        history = _sanitize_history(payload.get("history", []))
         model = str(payload.get("model", OPENAI_MODEL_DEFAULT)).strip() or OPENAI_MODEL_DEFAULT
         kb = payload.get("kb", {})
         kb_enabled = bool(kb.get("enabled")) if isinstance(kb, dict) else False
@@ -262,7 +281,7 @@ class AppHandler(SimpleHTTPRequestHandler):
         if not user:
             self._send_json(HTTPStatus.BAD_REQUEST, {"error": "Missing 'user'"})
             return
-        if _is_unclear_user_query(user):
+        if _is_unclear_user_query(user) and not history:
             self._send_json(HTTPStatus.OK, {"content": "제가 잘 못 알아들었습니다. 다시 질문해 주세요."})
             return
 
@@ -299,13 +318,15 @@ class AppHandler(SimpleHTTPRequestHandler):
                 {"type": "image_url", "image_url": {"url": image_data_url}},
             ]
 
+        messages = [{"role": "system", "content": system}]
+        if history:
+            messages.extend(history)
+        messages.append({"role": "user", "content": user_content})
+
         upstream_payload = {
             "model": model,
             "temperature": 0.2,
-            "messages": [
-                {"role": "system", "content": system},
-                {"role": "user", "content": user_content},
-            ],
+            "messages": messages,
         }
 
         req = request.Request(
