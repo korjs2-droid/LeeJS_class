@@ -26,9 +26,11 @@ RATE_MAX_REQUESTS = 20
 MAX_CHAT_BODY_BYTES = 8_000_000
 MAX_ADMIN_BODY_BYTES = 30_000_000
 MAX_ADMIN_UPLOAD_BYTES = 40_000_000
+MAX_FEEDBACK_BODY_BYTES = 60_000
 DEFAULT_PORT = 8000
 BASE_DIR = Path(__file__).resolve().parent
 DEFAULT_MATERIALS_DIR = BASE_DIR / "materials"
+DEFAULT_FEEDBACK_PATH = BASE_DIR / "feedback.jsonl"
 ALLOWED_EXTENSIONS = {".pdf", ".txt", ".md", ".csv"}
 CHUNK_SIZE = 1400
 CHUNK_OVERLAP = 220
@@ -43,6 +45,8 @@ _request_log = defaultdict(deque)
 _kb_chunks = []
 _kb_files = []
 _materials_dir = DEFAULT_MATERIALS_DIR
+_feedback_path = DEFAULT_FEEDBACK_PATH
+_feedback_entries = []
 
 
 def _rate_limit_ok(ip: str) -> bool:
@@ -178,10 +182,45 @@ def _load_materials(materials_dir: Path) -> tuple[list[dict], list[str]]:
             chunks.append({"source": path.name, "text": chunk, "tokens": _tokenize(chunk)})
     return chunks, files
 
+def _load_feedback(path: Path) -> list[dict]:
+    entries = []
+    if not path.exists():
+        return entries
+    for line in path.read_text(encoding="utf-8", errors="ignore").splitlines():
+        if not line.strip():
+            continue
+        try:
+            obj = json.loads(line)
+        except Exception:
+            continue
+        question = str(obj.get("question", "")).strip()
+        correction = str(obj.get("correction", "")).strip()
+        if not question or not correction:
+            continue
+        entries.append(
+            {
+                "question": question,
+                "badAnswer": str(obj.get("badAnswer", "")).strip(),
+                "correction": correction,
+                "tokens": _tokenize(f"{question} {correction}"),
+                "ts": str(obj.get("ts", "")).strip(),
+            }
+        )
+    return entries
+
+def _append_feedback(path: Path, item: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8") as f:
+        f.write(json.dumps(item, ensure_ascii=False) + "\n")
+
 
 def _reload_kb() -> None:
     global _kb_chunks, _kb_files
     _kb_chunks, _kb_files = _load_materials(_materials_dir)
+
+def _reload_feedback() -> None:
+    global _feedback_entries
+    _feedback_entries = _load_feedback(_feedback_path)
 
 
 def _rank_chunks(query: str, top_k: int = 6) -> list[dict]:
@@ -206,11 +245,30 @@ def _build_context(chunks: list[dict]) -> str:
         f"[Source {i + 1}: {chunk['source']}]\n{chunk['text']}" for i, chunk in enumerate(chunks)
     )
 
+def _rank_feedback(query: str, top_k: int = 2) -> list[dict]:
+    if not _feedback_entries:
+        return []
+    q_tokens = set(_tokenize(query))
+    if not q_tokens:
+        return _feedback_entries[-top_k:]
+    scored = []
+    for item in _feedback_entries:
+        score = 0
+        for tok in item["tokens"]:
+            if tok in q_tokens:
+                score += 1
+        scored.append((score, item))
+    scored.sort(key=lambda x: x[0], reverse=True)
+    return [i for s, i in scored[:top_k] if s > 0]
+
 
 class AppHandler(SimpleHTTPRequestHandler):
     def do_POST(self) -> None:
         if self.path == "/api/chat":
             self._handle_chat()
+            return
+        if self.path == "/api/feedback":
+            self._handle_feedback()
             return
         if self.path == "/api/admin/upload":
             self._handle_admin_upload()
@@ -231,7 +289,10 @@ class AppHandler(SimpleHTTPRequestHandler):
             self._send_json(HTTPStatus.OK, {"ok": True})
             return
         if self.path == "/api/kb-status":
-            self._send_json(HTTPStatus.OK, {"chunks": len(_kb_chunks)})
+            self._send_json(
+                HTTPStatus.OK,
+                {"chunks": len(_kb_chunks), "feedbackCount": len(_feedback_entries)},
+            )
             return
         if self.path == "/api/admin/kb-status":
             if not self._check_admin_token():
@@ -311,6 +372,19 @@ class AppHandler(SimpleHTTPRequestHandler):
             return
 
         user_with_context = user
+        feedback_hits = _rank_feedback(user, top_k=2)
+        if feedback_hits:
+            correction_context = "\n\n".join(
+                f"[Correction {idx + 1}]"
+                f"\nRelated question: {item['question']}"
+                f"\nValidated correction: {item['correction']}"
+                for idx, item in enumerate(feedback_hits)
+            )
+            user_with_context = (
+                "Apply these validated correction notes with priority when relevant.\n\n"
+                f"{correction_context}\n\n"
+                f"Current request:\n{user}"
+            )
         if kb_enabled and _kb_chunks:
             top_chunks = _rank_chunks(kb_query, top_k=kb_top_k)
             context = _build_context(top_chunks)
@@ -318,7 +392,7 @@ class AppHandler(SimpleHTTPRequestHandler):
                 "Use only the class material context below when answering. "
                 "If details are limited, provide the best possible answer and then ask one short follow-up question.\n\n"
                 f"Class material context:\n{context}\n\n"
-                f"Request:\n{user}"
+                f"Request:\n{user_with_context}"
             )
 
         user_content = user_with_context
@@ -383,6 +457,41 @@ class AppHandler(SimpleHTTPRequestHandler):
         if _max_answer_chars > 0 and len(text) > _max_answer_chars:
             text = text[:_max_answer_chars].rstrip()
         self._send_json(HTTPStatus.OK, {"content": text or "No response."})
+
+    def _handle_feedback(self) -> None:
+        provided_password = self.headers.get("X-User-Password", "").strip()
+        if _user_page_password and provided_password != _user_page_password:
+            self._send_json(HTTPStatus.UNAUTHORIZED, {"error": "Unauthorized"})
+            return
+        try:
+            payload = self._read_json_body(MAX_FEEDBACK_BODY_BYTES)
+        except ValueError as e:
+            self._send_json(HTTPStatus.BAD_REQUEST, {"error": str(e)})
+            return
+
+        question = str(payload.get("question", "")).strip()
+        bad_answer = str(payload.get("badAnswer", "")).strip()
+        correction = str(payload.get("correction", "")).strip()
+        if not question or not correction:
+            self._send_json(HTTPStatus.BAD_REQUEST, {"error": "Missing question or correction"})
+            return
+        if len(question) > 1000 or len(correction) > 3000:
+            self._send_json(HTTPStatus.BAD_REQUEST, {"error": "Feedback too long"})
+            return
+
+        item = {
+            "question": question,
+            "badAnswer": bad_answer[:3000],
+            "correction": correction,
+            "ts": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        }
+        try:
+            _append_feedback(_feedback_path, item)
+            _reload_feedback()
+        except Exception as e:
+            self._send_json(HTTPStatus.INTERNAL_SERVER_ERROR, {"error": f"Failed to save feedback: {e}"})
+            return
+        self._send_json(HTTPStatus.OK, {"ok": True, "feedbackCount": len(_feedback_entries)})
 
     def _handle_admin_upload(self) -> None:
         if not self._check_admin_token():
@@ -544,12 +653,15 @@ def main() -> None:
         default=int(os.environ.get("PORT", str(DEFAULT_PORT))),
     )
     parser.add_argument("--materials-dir", type=str, default=str(DEFAULT_MATERIALS_DIR))
+    parser.add_argument("--feedback-path", type=str, default=str(DEFAULT_FEEDBACK_PATH))
     args = parser.parse_args()
 
-    global _materials_dir
+    global _materials_dir, _feedback_path
     _materials_dir = Path(args.materials_dir)
+    _feedback_path = Path(args.feedback_path)
 
     _reload_kb()
+    _reload_feedback()
 
     server = ThreadingHTTPServer((args.host, args.port), AppHandler)
     print(f"Serving on http://localhost:{args.port}")
@@ -559,6 +671,7 @@ def main() -> None:
     print(f"DEFAULT_SYSTEM_PROMPT length: {len(_default_system_prompt)}")
     print(f"USER_PAGE_PASSWORD enabled: {bool(_user_page_password)}")
     print(f"Knowledge base files: {len(_kb_files)}, chunks: {len(_kb_chunks)}")
+    print(f"Feedback entries: {len(_feedback_entries)}")
     if _kb_files:
         print("Loaded:", ", ".join(_kb_files))
     else:
