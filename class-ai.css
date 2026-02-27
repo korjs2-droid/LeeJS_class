@@ -227,6 +227,12 @@ button:hover {
   justify-content: flex-end;
 }
 
+.bot-wrap {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+}
+
 .avatar {
   width: 58px;
   height: 58px;
@@ -328,6 +334,16 @@ button:hover {
   font-size: 28px;
   display: grid;
   place-items: center;
+}
+
+.feedback-btn {
+  border: 1px solid #5d66a8;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #404f7f;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 10px;
 }
 
 @media (max-width: 760px) {
