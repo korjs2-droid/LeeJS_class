@@ -140,7 +140,7 @@ function appendBotMessage(text, options = {}) {
 function appendTyping() {
   const row = document.createElement("div");
   row.className = "typing-row";
-  row.textContent = "답변 생성 중...";
+  row.textContent = "이준서 교수 고민중...";
   messagesEl.appendChild(row);
   scrollToBottom();
   return row;
