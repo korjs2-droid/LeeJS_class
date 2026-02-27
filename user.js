@@ -88,7 +88,10 @@ async function sendQuestion() {
     pushHistory("user", question);
     pushHistory("assistant", json.content || "No response.");
     removeTyping(typingNode);
-    appendBotMessage(json.content || "No response.");
+    appendBotMessage(json.content || "No response.", {
+      allowFeedback: true,
+      question,
+    });
   } catch (error) {
     removeTyping(typingNode);
     appendBotMessage(`Failed: ${error.message}`);
@@ -113,11 +116,23 @@ function appendUserMessage(text, imageDataUrl) {
   scrollToBottom();
 }
 
-function appendBotMessage(text) {
+function appendBotMessage(text, options = {}) {
+  const { allowFeedback = false, question = "" } = options;
   const row = document.createElement("div");
   row.className = "msg-row bot";
-  row.innerHTML = `<img class="avatar-img" src="lee.JPG" alt="챗봇 아바타" /><div class="bubble bot-bubble"></div>`;
-  row.querySelector(".bubble").textContent = text;
+  row.innerHTML =
+    `<img class="avatar-img" src="lee.JPG" alt="챗봇 아바타" />` +
+    `<div class="bot-wrap"><div class="bubble bot-bubble"></div></div>`;
+  const bubble = row.querySelector(".bubble");
+  bubble.textContent = text;
+  if (allowFeedback) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "feedback-btn";
+    btn.textContent = "수정요청";
+    btn.addEventListener("click", () => submitFeedback(question, text));
+    row.querySelector(".bot-wrap").appendChild(btn);
+  }
   messagesEl.appendChild(row);
   scrollToBottom();
 }
@@ -125,7 +140,7 @@ function appendBotMessage(text) {
 function appendTyping() {
   const row = document.createElement("div");
   row.className = "typing-row";
-  row.textContent = "이준서 교수 고민중...";
+  row.textContent = "답변 생성 중...";
   messagesEl.appendChild(row);
   scrollToBottom();
   return row;
@@ -145,6 +160,39 @@ function pushHistory(role, content) {
   conversationHistory.push({ role, content });
   if (conversationHistory.length > MAX_HISTORY_MESSAGES) {
     conversationHistory.splice(0, conversationHistory.length - MAX_HISTORY_MESSAGES);
+  }
+}
+
+async function submitFeedback(question, badAnswer) {
+  const password = passwordInput.value.trim();
+  if (!password) {
+    appendBotMessage("수정요청 전 비밀번호를 입력하세요.");
+    return;
+  }
+  const correction = window.prompt("어떤 내용이 틀렸는지, 정답을 입력해 주세요.");
+  if (!correction || !correction.trim()) {
+    return;
+  }
+  try {
+    const res = await fetch("/api/feedback", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-User-Password": password,
+      },
+      body: JSON.stringify({
+        question,
+        badAnswer,
+        correction: correction.trim(),
+      }),
+    });
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(`${res.status} ${text}`);
+    }
+    appendBotMessage("수정요청이 저장되었습니다. 다음 답변부터 반영됩니다.");
+  } catch (error) {
+    appendBotMessage(`수정요청 저장 실패: ${error.message}`);
   }
 }
 
