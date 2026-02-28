@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Class AI Admin</title>
+    <link rel="stylesheet" href="class-ai.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="top">
+        <h1>Class AI Admin</h1>
+        <p>관리자 전용: PDF/문서 업로드 후 수업 자료 지식베이스 반영</p>
+      </header>
+
+      <section class="panel">
+        <div class="tabs">
+          <button id="tabUpload" class="tab-btn active" type="button">Materials</button>
+          <button id="tabLimit" class="tab-btn" type="button">Answer Limit</button>
+          <button id="tabPrompt" class="tab-btn" type="button">Prompt</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Admin Auth</h2>
+        <label for="adminToken">Admin Token</label>
+        <input id="adminToken" type="password" placeholder="ADMIN_TOKEN" autocomplete="off" />
+      </section>
+
+      <section id="panelUpload" class="panel">
+        <h2>Upload Materials</h2>
+        <label for="files">Files (.pdf, .txt, .md, .csv)</label>
+        <input id="files" type="file" accept=".pdf,.txt,.md,.csv,application/pdf,text/plain,text/markdown,text/csv" multiple />
+        <button id="upload" type="button">Upload & Reload KB</button>
+      </section>
+
+      <section id="panelLimit" class="panel hidden">
+        <h2>MAX_ANSWER_CHARS</h2>
+        <label for="maxAnswerChars">0 = unlimited</label>
+        <input id="maxAnswerChars" type="number" min="0" max="20000" step="1" placeholder="e.g. 500" />
+        <button id="saveLimit" type="button">Save Limit</button>
+      </section>
+
+      <section id="panelPrompt" class="panel hidden">
+        <h2>Default Prompt</h2>
+        <label for="defaultPrompt">사용자 페이지 기본 system prompt</label>
+        <textarea id="defaultPrompt" rows="8" placeholder="기본 프롬프트를 입력하세요."></textarea>
+        <button id="savePrompt" type="button">Save Prompt</button>
+      </section>
+
+      <section class="panel">
+        <h2>KB Status</h2>
+        <button id="refresh" type="button">Refresh Status</button>
+        <button id="downloadFeedback" type="button">Download feedback.jsonl</button>
+        <pre id="status" class="output">상태를 불러오는 중...</pre>
+      </section>
+
+      <section class="panel">
+        <h2>Student Page</h2>
+        <p class="hint"><a href="/">사용자 페이지 열기</a></p>
+      </section>
+    </main>
+
+    <script src="admin.js"></script>
+  </body>
+</html>
