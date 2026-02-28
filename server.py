@@ -288,6 +288,53 @@ def _sync_feedback_to_github() -> tuple[bool, str]:
         return False, f"GitHub write request failed: {e}"
 
 
+def _restore_feedback_from_github_if_needed() -> tuple[bool, str]:
+    if not (_github_token and _github_owner and _github_repo):
+        return False, "GitHub restore disabled (missing GITHUB_TOKEN/GITHUB_OWNER/GITHUB_REPO)"
+
+    # Keep local data if it already exists and has content.
+    try:
+        if _feedback_path.exists() and _feedback_path.stat().st_size > 0:
+            return True, "Skipped restore (local feedback file already exists)"
+    except Exception:
+        pass
+
+    encoded_path = quote(_github_feedback_path, safe="/")
+    get_url = (
+        f"https://api.github.com/repos/{_github_owner}/{_github_repo}/contents/{encoded_path}"
+        f"?ref={quote(_github_branch, safe='')}"
+    )
+    headers = {
+        "Authorization": f"Bearer {_github_token}",
+        "Accept": "application/vnd.github+json",
+        "User-Agent": "class-ai-feedback-restore",
+    }
+    req = request.Request(get_url, headers=headers, method="GET")
+    try:
+        with request.urlopen(req, timeout=20) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+    except error.HTTPError as e:
+        if e.code == 404:
+            return False, "No feedback file found in GitHub"
+        detail = e.read().decode("utf-8", errors="ignore")
+        return False, f"GitHub restore read failed ({e.code}): {detail[:250]}"
+    except Exception as e:
+        return False, f"GitHub restore request failed: {e}"
+
+    content = str(data.get("content", "")).strip()
+    encoding = str(data.get("encoding", "")).strip().lower()
+    if not content or encoding != "base64":
+        return False, "Invalid GitHub feedback content"
+
+    try:
+        raw = base64.b64decode(content, validate=False)
+        _feedback_path.parent.mkdir(parents=True, exist_ok=True)
+        _feedback_path.write_bytes(raw)
+    except Exception as e:
+        return False, f"Failed to write restored feedback file: {e}"
+    return True, f"Restored feedback from GitHub to {_feedback_path}"
+
+
 def _rank_chunks(query: str, top_k: int = 6) -> list[dict]:
     if not _kb_chunks:
         return []
@@ -758,6 +805,7 @@ def main() -> None:
     _feedback_path = Path(args.feedback_path)
 
     _reload_kb()
+    _, restore_msg = _restore_feedback_from_github_if_needed()
     _reload_feedback()
 
     server = ThreadingHTTPServer((args.host, args.port), AppHandler)
@@ -768,6 +816,7 @@ def main() -> None:
     print(f"DEFAULT_SYSTEM_PROMPT length: {len(_default_system_prompt)}")
     print(f"USER_PAGE_PASSWORD enabled: {bool(_user_page_password)}")
     print(f"GitHub feedback sync enabled: {bool(_github_token and _github_owner and _github_repo)}")
+    print(f"GitHub feedback restore: {restore_msg}")
     print(f"Knowledge base files: {len(_kb_files)}, chunks: {len(_kb_chunks)}")
     print(f"Feedback entries: {len(_feedback_entries)}")
     if _kb_files:
