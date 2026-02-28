@@ -9,7 +9,7 @@ from collections import defaultdict, deque
 from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from urllib.parse import unquote
+from urllib.parse import quote, unquote
 from urllib import error, request
 
 try:
@@ -47,6 +47,11 @@ _kb_files = []
 _materials_dir = DEFAULT_MATERIALS_DIR
 _feedback_path = DEFAULT_FEEDBACK_PATH
 _feedback_entries = []
+_github_token = os.environ.get("GITHUB_TOKEN", "").strip()
+_github_owner = os.environ.get("GITHUB_OWNER", "").strip()
+_github_repo = os.environ.get("GITHUB_REPO", "").strip()
+_github_branch = os.environ.get("GITHUB_BRANCH", "main").strip() or "main"
+_github_feedback_path = os.environ.get("GITHUB_FEEDBACK_PATH", "class-ai/feedback.jsonl").strip() or "class-ai/feedback.jsonl"
 
 
 def _rate_limit_ok(ip: str) -> bool:
@@ -221,6 +226,66 @@ def _reload_kb() -> None:
 def _reload_feedback() -> None:
     global _feedback_entries
     _feedback_entries = _load_feedback(_feedback_path)
+
+
+def _sync_feedback_to_github() -> tuple[bool, str]:
+    if not (_github_token and _github_owner and _github_repo):
+        return False, "GitHub sync disabled (missing GITHUB_TOKEN/GITHUB_OWNER/GITHUB_REPO)"
+    if not _feedback_path.exists():
+        return False, "Local feedback file does not exist"
+    try:
+        raw = _feedback_path.read_bytes()
+    except Exception as e:
+        return False, f"Failed to read local feedback: {e}"
+
+    encoded_path = quote(_github_feedback_path, safe="/")
+    base_url = (
+        f"https://api.github.com/repos/{_github_owner}/{_github_repo}/contents/{encoded_path}"
+    )
+    headers = {
+        "Authorization": f"Bearer {_github_token}",
+        "Accept": "application/vnd.github+json",
+        "User-Agent": "class-ai-feedback-sync",
+    }
+
+    sha = None
+    get_url = f"{base_url}?ref={quote(_github_branch, safe='')}"
+    get_req = request.Request(get_url, headers=headers, method="GET")
+    try:
+        with request.urlopen(get_req, timeout=20) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            sha = data.get("sha")
+    except error.HTTPError as e:
+        if e.code != 404:
+            detail = e.read().decode("utf-8", errors="ignore")
+            return False, f"GitHub read failed ({e.code}): {detail[:250]}"
+    except Exception as e:
+        return False, f"GitHub read request failed: {e}"
+
+    payload = {
+        "message": "chore: sync feedback.jsonl",
+        "content": base64.b64encode(raw).decode("ascii"),
+        "branch": _github_branch,
+    }
+    if sha:
+        payload["sha"] = sha
+
+    put_req = request.Request(
+        base_url,
+        data=json.dumps(payload).encode("utf-8"),
+        headers={**headers, "Content-Type": "application/json"},
+        method="PUT",
+    )
+    try:
+        with request.urlopen(put_req, timeout=25) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            commit = (data.get("commit") or {}).get("sha", "")[:7]
+            return True, f"Synced to GitHub ({commit or 'ok'})"
+    except error.HTTPError as e:
+        detail = e.read().decode("utf-8", errors="ignore")
+        return False, f"GitHub write failed ({e.code}): {detail[:250]}"
+    except Exception as e:
+        return False, f"GitHub write request failed: {e}"
 
 
 def _rank_chunks(query: str, top_k: int = 6) -> list[dict]:
@@ -497,7 +562,16 @@ class AppHandler(SimpleHTTPRequestHandler):
         except Exception as e:
             self._send_json(HTTPStatus.INTERNAL_SERVER_ERROR, {"error": f"Failed to save feedback: {e}"})
             return
-        self._send_json(HTTPStatus.OK, {"ok": True, "feedbackCount": len(_feedback_entries)})
+        github_synced, github_message = _sync_feedback_to_github()
+        self._send_json(
+            HTTPStatus.OK,
+            {
+                "ok": True,
+                "feedbackCount": len(_feedback_entries),
+                "githubSynced": github_synced,
+                "githubMessage": github_message,
+            },
+        )
 
     def _handle_admin_upload(self) -> None:
         if not self._check_admin_token():
@@ -693,6 +767,7 @@ def main() -> None:
     print(f"MAX_ANSWER_CHARS: {_max_answer_chars}")
     print(f"DEFAULT_SYSTEM_PROMPT length: {len(_default_system_prompt)}")
     print(f"USER_PAGE_PASSWORD enabled: {bool(_user_page_password)}")
+    print(f"GitHub feedback sync enabled: {bool(_github_token and _github_owner and _github_repo)}")
     print(f"Knowledge base files: {len(_kb_files)}, chunks: {len(_kb_chunks)}")
     print(f"Feedback entries: {len(_feedback_entries)}")
     if _kb_files:
