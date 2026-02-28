@@ -312,6 +312,12 @@ class AppHandler(SimpleHTTPRequestHandler):
                 },
             )
             return
+        if self.path == "/api/admin/feedback-download":
+            if not self._check_admin_token():
+                self._send_json(HTTPStatus.UNAUTHORIZED, {"error": "Unauthorized"})
+                return
+            self._handle_feedback_download()
+            return
         super().do_GET()
 
     def _read_json_body(self, max_bytes: int) -> dict:
@@ -639,6 +645,23 @@ class AppHandler(SimpleHTTPRequestHandler):
         body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
         self.send_response(status)
         self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
+    def _handle_feedback_download(self) -> None:
+        path = _feedback_path
+        if not path.exists():
+            body = b""
+        else:
+            try:
+                body = path.read_bytes()
+            except Exception as e:
+                self._send_json(HTTPStatus.INTERNAL_SERVER_ERROR, {"error": f"Read failed: {e}"})
+                return
+        self.send_response(HTTPStatus.OK)
+        self.send_header("Content-Type", "application/x-ndjson; charset=utf-8")
+        self.send_header("Content-Disposition", "attachment; filename=\"feedback.jsonl\"")
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
         self.wfile.write(body)
