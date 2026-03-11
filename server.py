@@ -19,6 +19,7 @@ except Exception:
 
 
 OPENAI_API_URL = "https://api.openai.com/v1/chat/completions"
+OPENAI_EMBEDDINGS_URL = "https://api.openai.com/v1/embeddings"
 OPENAI_MODEL_DEFAULT = "gpt-4o-mini"
 OPENAI_MODEL_ALLOWLIST = {"gpt-4o-mini", "gpt-4o"}
 RATE_WINDOW_SECONDS = 60
@@ -40,6 +41,11 @@ _default_system_prompt = os.environ.get(
     "Answer primarily based on the provided class materials. If the materials are incomplete, continue with a concise, useful answer using reliable external knowledge. Do not use template disclaimers like 'the provided materials do not include information about ...'.",
 ).strip()
 _user_page_password = os.environ.get("USER_PAGE_PASSWORD", "12345678!").strip()
+_feedback_embedding_model = os.environ.get("FEEDBACK_EMBED_MODEL", "text-embedding-3-small").strip() or "text-embedding-3-small"
+try:
+    _feedback_similarity_threshold = float(os.environ.get("FEEDBACK_SIMILARITY_THRESHOLD", "0.45"))
+except Exception:
+    _feedback_similarity_threshold = 0.45
 
 _request_log = defaultdict(deque)
 _kb_chunks = []
@@ -47,6 +53,8 @@ _kb_files = []
 _materials_dir = DEFAULT_MATERIALS_DIR
 _feedback_path = DEFAULT_FEEDBACK_PATH
 _feedback_entries = []
+_query_embedding_cache = {}
+_feedback_embedding_ready = False
 _github_token = os.environ.get("GITHUB_TOKEN", "").strip()
 _github_owner = os.environ.get("GITHUB_OWNER", "").strip()
 _github_repo = os.environ.get("GITHUB_REPO", "").strip()
@@ -224,8 +232,87 @@ def _reload_kb() -> None:
     _kb_chunks, _kb_files = _load_materials(_materials_dir)
 
 def _reload_feedback() -> None:
-    global _feedback_entries
+    global _feedback_entries, _feedback_embedding_ready, _query_embedding_cache
     _feedback_entries = _load_feedback(_feedback_path)
+    _feedback_embedding_ready = False
+    _query_embedding_cache = {}
+
+
+def _openai_embed_texts(texts: list[str]) -> list[list[float]]:
+    api_key = os.environ.get("OPENAI_API_KEY", "").strip()
+    if not api_key:
+        return []
+    payload = {
+        "model": _feedback_embedding_model,
+        "input": texts,
+    }
+    req = request.Request(
+        OPENAI_EMBEDDINGS_URL,
+        data=json.dumps(payload).encode("utf-8"),
+        headers={
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {api_key}",
+        },
+        method="POST",
+    )
+    try:
+        with request.urlopen(req, timeout=30) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+    except Exception:
+        return []
+    rows = data.get("data") or []
+    vectors = []
+    for row in rows:
+        emb = row.get("embedding")
+        if isinstance(emb, list) and emb:
+            vectors.append(emb)
+    return vectors
+
+
+def _cosine_similarity(a: list[float], b: list[float]) -> float:
+    if not a or not b or len(a) != len(b):
+        return -1.0
+    dot = 0.0
+    na = 0.0
+    nb = 0.0
+    for av, bv in zip(a, b):
+        dot += av * bv
+        na += av * av
+        nb += bv * bv
+    if na <= 0.0 or nb <= 0.0:
+        return -1.0
+    return dot / ((na ** 0.5) * (nb ** 0.5))
+
+
+def _ensure_feedback_embeddings() -> bool:
+    global _feedback_embedding_ready
+    if _feedback_embedding_ready:
+        return True
+    if not _feedback_entries:
+        _feedback_embedding_ready = True
+        return True
+    texts = [f"{item['question']}\n{item['correction']}" for item in _feedback_entries]
+    vectors = _openai_embed_texts(texts)
+    if len(vectors) != len(_feedback_entries):
+        return False
+    for item, vec in zip(_feedback_entries, vectors):
+        item["embedding"] = vec
+    _feedback_embedding_ready = True
+    return True
+
+
+def _embed_query_cached(query: str) -> list[float]:
+    cached = _query_embedding_cache.get(query)
+    if cached:
+        return cached
+    vectors = _openai_embed_texts([query])
+    if not vectors:
+        return []
+    vec = vectors[0]
+    if len(_query_embedding_cache) > 200:
+        _query_embedding_cache.clear()
+    _query_embedding_cache[query] = vec
+    return vec
 
 
 def _sync_feedback_to_github() -> tuple[bool, str]:
@@ -360,18 +447,33 @@ def _build_context(chunks: list[dict]) -> str:
 def _rank_feedback(query: str, top_k: int = 2) -> list[dict]:
     if not _feedback_entries:
         return []
+    # 1) Semantic match (embedding) first.
+    if _ensure_feedback_embeddings():
+        q_vec = _embed_query_cached(query)
+        if q_vec:
+            scored = []
+            for item in _feedback_entries:
+                vec = item.get("embedding") or []
+                sim = _cosine_similarity(q_vec, vec)
+                scored.append((sim, item))
+            scored.sort(key=lambda x: x[0], reverse=True)
+            hits = [i for s, i in scored[:top_k] if s >= _feedback_similarity_threshold]
+            if hits:
+                return hits
+
+    # 2) Fallback to token overlap when embedding is unavailable or too weak.
     q_tokens = set(_tokenize(query))
     if not q_tokens:
         return _feedback_entries[-top_k:]
-    scored = []
+    token_scored = []
     for item in _feedback_entries:
         score = 0
         for tok in item["tokens"]:
             if tok in q_tokens:
                 score += 1
-        scored.append((score, item))
-    scored.sort(key=lambda x: x[0], reverse=True)
-    return [i for s, i in scored[:top_k] if s > 0]
+        token_scored.append((score, item))
+    token_scored.sort(key=lambda x: x[0], reverse=True)
+    return [i for s, i in token_scored[:top_k] if s > 0]
 
 
 class AppHandler(SimpleHTTPRequestHandler):
@@ -817,6 +919,7 @@ def main() -> None:
     print(f"USER_PAGE_PASSWORD enabled: {bool(_user_page_password)}")
     print(f"GitHub feedback sync enabled: {bool(_github_token and _github_owner and _github_repo)}")
     print(f"GitHub feedback restore: {restore_msg}")
+    print(f"Feedback semantic matching: model={_feedback_embedding_model}, threshold={_feedback_similarity_threshold}")
     print(f"Knowledge base files: {len(_kb_files)}, chunks: {len(_kb_chunks)}")
     print(f"Feedback entries: {len(_feedback_entries)}")
     if _kb_files:
