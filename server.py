@@ -610,7 +610,8 @@ class AppHandler(SimpleHTTPRequestHandler):
             context = _build_context(top_chunks)
             user_with_context = (
                 "Use only the class material context below when answering. "
-                "If details are limited, provide the best possible answer and then ask one short follow-up question.\n\n"
+                "After your answer, always add exactly one short follow-up question. "
+                "Vary follow-up wording naturally and do not repeat fixed phrases like '추가로 궁금한 점이 있나요?'.\n\n"
                 f"Class material context:\n{context}\n\n"
                 f"Request:\n{user_with_context}"
             )
