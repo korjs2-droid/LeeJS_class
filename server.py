@@ -43,9 +43,9 @@ _default_system_prompt = os.environ.get(
 _user_page_password = os.environ.get("USER_PAGE_PASSWORD", "12345678!").strip()
 _feedback_embedding_model = os.environ.get("FEEDBACK_EMBED_MODEL", "text-embedding-3-small").strip() or "text-embedding-3-small"
 try:
-    _feedback_similarity_threshold = float(os.environ.get("FEEDBACK_SIMILARITY_THRESHOLD", "0.45"))
+    _feedback_similarity_threshold = float(os.environ.get("FEEDBACK_SIMILARITY_THRESHOLD", "0.55"))
 except Exception:
-    _feedback_similarity_threshold = 0.45
+    _feedback_similarity_threshold = 0.55
 
 _request_log = defaultdict(deque)
 _kb_chunks = []
@@ -610,7 +610,7 @@ class AppHandler(SimpleHTTPRequestHandler):
             context = _build_context(top_chunks)
             user_with_context = (
                 "Use only the class material context below when answering. "
-                "After your answer, always add exactly one short follow-up question. "
+                "Add at most one short follow-up question only when it is truly needed. "
                 "Vary follow-up wording naturally and do not repeat fixed phrases like '추가로 궁금한 점이 있나요?'.\n\n"
                 f"Class material context:\n{context}\n\n"
                 f"Request:\n{user_with_context}"
